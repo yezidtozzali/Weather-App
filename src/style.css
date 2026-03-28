@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&display=swap');
+
+:root{
+    --background-color: whitesmoke;
+    --text-color: #000000;
+}
+body{
+    background-color: var(--background-color);
+}
+.dark-mode{
+    --background-color: #1a1a1a;
+    --text-color: #000000;
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+
+}
+
+header h2{
+    font-family: "Sora", sans-serif;
+    letter-spacing: -3px;
+    font-weight: 900;
+    font-size: 32px;
+    width: 33%;
+}
+
+.search{
+    width: 33%;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: auto;
+}
+
+.search input{
+    border-radius: 16px;
+    font-size: 16px;
+    width: 360px;
+    height: 42px;
+    padding: 4px 16px;
+    border: none;
+    background-color: rgb(221, 221, 221);
+}
+
+.search button{
+    border-radius: 16px;
+
+}
+
+.button-header{
+    display: flex;
+    justify-content: flex-end;
+    width: 33%;
+    
+}
+
+.mode button {
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 12px;
+    background-color: #ffffff;
+}
+
+
+.theme-toggle{
+    width: 32px;
+    height: 32px;
+}
+
+.container{
+    max-width: 900px;
+    background-color: var(--background-color);
+    margin: 120px auto;
+    height: 5000px;
+    
+}
+
+
+.weather-today{
+    padding: 20px 32px 32px;
+    width: 480px;
+    display: grid;
+    grid-template-columns: 240px 240px;
+    grid-template-rows: 100px 100px ;
+    grid-template-areas: 
+    "temperature conditions"
+    "today today";
+    background-color: #ffffff;
+    border-radius: 16px;
+}
+
+.weather-now{
+    grid-area: temperature;
+    display: flex;
+    align-items: start;
+    gap: 12px;
+}
+
+.icon-today{
+    width: 56px;
+    height: 56px;
+    
+}
+
+.temperature-today{
+    font-size: 90px;
+    letter-spacing: -4px;
+    margin-top: -8px;
+}
+
+.conditions-address{
+    grid-area: conditions;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 4px;
+
+}
+
+.conditions{
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.location{
+    font-size: 16px;
+    color: rgb(102, 102, 102);
+    text-align: right;
+}
+.div-hours{
+    text-align: center;
+    width: 25%;
+}
+
+.weather-day{
+    grid-area: today;
+    display: flex;
+    justify-content: space-around;
+    gap: 84px;
+    margin: 24px 0 ;
+    
+}
+
+
+.img-hours{
+    width: 32px;
+    height: 32px;
+
+}
