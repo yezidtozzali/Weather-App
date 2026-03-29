@@ -84,12 +84,19 @@ header h2{
     background-color: var(--background-color);
     margin: 120px auto;
     height: 5000px;
-    
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 550px 1fr;
+    grid-template-rows: 300px 1fr;
+    grid-template-areas:  
+    "weather infos"
+    "nexdays infos";
 }
 
 
 .weather-today{
-    padding: 20px 32px 32px;
+    grid-area: weather;
+    padding: 32px 32px 36px 32px;
     width: 480px;
     display: grid;
     grid-template-columns: 240px 240px;
@@ -99,6 +106,7 @@ header h2{
     "today today";
     background-color: #ffffff;
     border-radius: 16px;
+    height: 200px;
 }
 
 .weather-now{
@@ -159,4 +167,49 @@ header h2{
     width: 32px;
     height: 32px;
 
+}
+
+.more-info{
+    grid-area: infos;
+    height: 408px;
+    width: 320px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 38px 32px;
+}
+.feelslike{
+    display: flex;
+    flex-direction: column;
+}
+
+.feelsliketext{
+
+}
+
+.feelslikeinfo{
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: -8px;
+}
+
+.info-display{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 56px;
+}
+.subinfo{
+    display: flex;
+    align-items: end;
+    gap: 4px;
+}
+
+.info-icon{
+    width: 24px;
+    height: 24px;
+}
+
+.div-info{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 28px;
 }

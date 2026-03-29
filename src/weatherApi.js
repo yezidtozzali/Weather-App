@@ -1,4 +1,5 @@
 import weatherToday from "./display/weatherToday";
+import moreInfo from "./display/moreInfo";
 
 const weatherApi = () => {
 
@@ -9,6 +10,7 @@ const weatherApi = () => {
         const location = locationInput.value;
         const weatherData = await getWeather(location);
         weatherToday(weatherData);
+        moreInfo(weatherData);
         };
 
     
@@ -24,11 +26,21 @@ const weatherApi = () => {
         const weatherCondition = weather.currentConditions.conditions;
         const weatherTemperature = weather.currentConditions.temp;
         const weatherIcon = weather.currentConditions.icon;
-
         const weatherTime = weather.days[0].hours;
+        const weatherHumidity = weather.currentConditions.humidity;
+        const weatherFeelsLike = weather.currentConditions.feelslike;
+        const weatherWind = weather.currentConditions.windspeed;
+        const weatherWindDir = weather.currentConditions.winddir;
+        const weatherUV = weather.currentConditions.uvindex;
+        const weatherPressure = weather.currentConditions.pressure;
+        const weatherSunrise = weather.currentConditions.sunrise;
+        const weatherSunset = weather.currentConditions.sunset;
+        const weatherMin = weather.days[0].tempmin;
+        const weatherMax = weather.days[0].tempmax;
+        const weatherVisibility = weather.currentConditions.visibility;
 
 
-        return{weatherCondition, weatherLocation, weatherTemperature, weatherIcon, weatherTime};
+        return{weatherCondition, weatherLocation, weatherTemperature, weatherIcon, weatherTime, weatherHumidity, weatherFeelsLike, weatherWind, weatherWindDir, weatherUV, weatherPressure, weatherSunrise, weatherSunset, weatherMax, weatherMin, weatherVisibility};
         };
 
     async function getWeather (location) {
