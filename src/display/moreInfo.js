@@ -16,7 +16,8 @@ if(existingMoreInfo) existingMoreInfo.remove();
     const container = document.querySelector(".container");
     const divMoreInfo = document.createElement("div");
     divMoreInfo.classList.add("more-info");
-    divMoreInfo.innerHTML = "";
+    divMoreInfo.classList.add("fade-in");
+    
 
     const info1 = document.createElement("div");
     info1.classList.add("info-display");

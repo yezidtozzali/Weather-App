@@ -2,14 +2,29 @@
 
 :root{
     --background-color: whitesmoke;
+    --cell-color: #ffffff;
     --text-color: #000000;
+    --input-bg: rgb(221, 221, 221);
+    --secondary-text: rgb(102, 102, 102);
+    --icon-color : none;
+    --hover: #eeecec;
 }
 body{
     background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+label{
+    display: none;
 }
 .dark-mode{
     --background-color: #1a1a1a;
-    --text-color: #000000;
+    --cell-color: #1e2128;
+    --text-color: #e8eaed;
+    --input-bg: #2d3139;
+    --secondary-text: #9aa0a6;
+    --icon-color : invert(1);
+    --hover: #313541;
 }
 
 
@@ -27,12 +42,14 @@ header{
 
 }
 
-header h2{
+header h1{
     font-family: "Sora", sans-serif;
     letter-spacing: -3px;
     font-weight: 900;
     font-size: 32px;
     width: 33%;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .search{
@@ -40,22 +57,85 @@ header h2{
     display: flex;
     justify-content: center;
     gap: 8px;
-    margin: auto;
+    
+    background-color: var(--background-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
 }
 
+.list-city{
+    background-color: var(--cell-color);
+    border-radius: 16px;
+    position: absolute;
+    top: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    cursor: pointer;
+}
+
+.info-city{
+    list-style: none;
+    color: var(--text-color);
+    padding: 16px 24px;
+    border-bottom: 1px solid rgb(226, 226, 226);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+
+}
+
+.info-city:hover{
+    background-color: var(--hover);
+}
+
+.info-city:hover:first-child{
+    background-color: var(--hover);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.info-city:hover:last-child{
+    background-color: var(--hover);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.info-city span{
+    color: var(--secondary-text);
+}
+
+.info-city:last-child{
+    border: none;
+}
+.list{
+    width: 70%;
+}
 .search input{
     border-radius: 16px;
     font-size: 16px;
-    width: 360px;
-    height: 42px;
+    width: 100%;
+    height: 54px;
     padding: 4px 16px;
     border: none;
-    background-color: rgb(221, 221, 221);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-sizing: border-box;
+    
+}
+.search input:focus{
+    outline: none;
+}
+
+.search input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset;
+    -webkit-text-fill-color: var(--text-color);
 }
 
 .search button{
     border-radius: 16px;
-
+    background-color: var(--background-color);
 }
 
 .button-header{
@@ -70,7 +150,7 @@ header h2{
     cursor: pointer;
     padding: 8px;
     border-radius: 12px;
-    background-color: #ffffff;
+    background-color: var(--cell-color);
 }
 
 
@@ -83,14 +163,15 @@ header h2{
     max-width: 900px;
     background-color: var(--background-color);
     margin: 120px auto;
-    height: 5000px;
+    height: auto;
     display: grid;
     gap: 32px;
     grid-template-columns: 550px 1fr;
-    grid-template-rows: 300px 1fr;
+    grid-template-rows: 272px 1fr;
     grid-template-areas:  
     "weather infos"
-    "nexdays infos";
+    "nextdays infos";
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 
@@ -104,9 +185,10 @@ header h2{
     grid-template-areas: 
     "temperature conditions"
     "today today";
-    background-color: #ffffff;
+    background-color: var(--cell-color);
     border-radius: 16px;
     height: 200px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .weather-now{
@@ -119,6 +201,7 @@ header h2{
 .icon-today{
     width: 56px;
     height: 56px;
+    filter: var(--icon-color);
     
 }
 
@@ -145,7 +228,7 @@ header h2{
 
 .location{
     font-size: 16px;
-    color: rgb(102, 102, 102);
+    color: var(--secondary-text);
     text-align: right;
 }
 .div-hours{
@@ -166,16 +249,18 @@ header h2{
 .img-hours{
     width: 32px;
     height: 32px;
+    filter: var(--icon-color);
 
 }
 
 .more-info{
     grid-area: infos;
-    height: 408px;
+    height: 400px;
     width: 320px;
-    background-color: #ffffff;
+    background-color: var(--cell-color);
     border-radius: 16px;
     padding: 38px 32px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .feelslike{
     display: flex;
@@ -206,6 +291,7 @@ header h2{
 .info-icon{
     width: 24px;
     height: 24px;
+    filter: var(--icon-color);
 }
 
 .div-info{
@@ -213,3 +299,35 @@ header h2{
     justify-content: space-between;
     margin-bottom: 28px;
 }
+
+.next-days{
+    grid-area:nextdays;
+    width: 480px;
+    height: 108px;
+    padding: 32px;
+    border-radius: 16px;
+    background-color: var(--cell-color);
+    display: flex;
+    gap: 84px;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.start{
+    grid-column: 1/3;
+    color: var(--secondary-text);
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    font-size: 16px;
+}
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(5px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+ 
+.fade-in{
+    animation: fadeIn 0.3s ease;
+}
+
