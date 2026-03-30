@@ -1,7 +1,8 @@
 import icons from "./icons";
-
+import convert from "../convert";
 
 const moreDays = (weatherData) => {
+    
 
     const existingNextDays = document.querySelector(".next-days");
 if(existingNextDays) existingNextDays.remove();
@@ -17,8 +18,6 @@ if(existingNextDays) existingNextDays.remove();
 
         const date = new Date(dayData.datetime);
         const day = date.toLocaleDateString("en-us", { weekday: "short"});
-        const min = Math.round(dayData.tempmin);
-        const max = Math.round(dayData.tempmax);
         const icon = icons[dayData.icon];
 
 
@@ -33,7 +32,11 @@ if(existingNextDays) existingNextDays.remove();
         img.classList.add("img-hours");
 
         const temperature = document.createElement("p");
-        temperature.textContent = min + "°/" + max +"°";
+        temperature.dataset.unit = "temperature";
+        temperature.dataset.min = Math.round(dayData.tempmin);
+        temperature.dataset.max = Math.round(dayData.tempmax);
+        temperature.classList.add("temperature")
+        temperature.textContent = temperature.dataset.min + "°/" + temperature.dataset.max +"°";
 
         divMoreDays.appendChild(div);
         div.appendChild(p);

@@ -7,8 +7,13 @@ import arrowIcon from "../assets/weather/arrow.svg";
 import pressureIcon from "../assets/weather/pressure.svg";
 import uvIcon from "../assets/weather/uv.svg";
 import visibilityIcon from "../assets/weather/visibility.svg"
+import convert from "../convert";
+import state from "../state";
+
 
 const moreInfo = (weatherData) => {
+
+    const {convertToCelsius, convertToFahrenheit, convertToKmh, convertToMb, convertToMph, convertToInHg} = convert();
 
     const existingMoreInfo = document.querySelector(".more-info");
 if(existingMoreInfo) existingMoreInfo.remove();
@@ -29,7 +34,17 @@ if(existingMoreInfo) existingMoreInfo.remove();
     feelslikeText.classList.add("feelsliketext");
 
     const feelslike = document.createElement("p");
-    feelslike.textContent = Math.round(weatherData.weatherFeelsLike) + "°";
+
+    const tempConversion = state.degreeF
+    ? Math.round(weatherData.weatherFeelsLike)
+    : Math.round(convertToCelsius(weatherData.weatherFeelsLike));
+
+    feelslike.textContent = tempConversion + "°";
+    feelslike.classList.add("temperature");
+    feelslike.dataset.min = "";
+    feelslike.dataset.max = "";
+    feelslike.dataset.value = weatherData.weatherFeelsLike;
+    feelslike.dataset.unit = "temperature";
     feelslike.classList.add("feelslikeinfo");
 
     const subInfo2 = document.createElement("div");
@@ -68,12 +83,23 @@ if(existingMoreInfo) existingMoreInfo.remove();
     directionIcon.style.transform = `rotate(${weatherData.weatherWindDir}deg)`;
 
     const windInfo = document.createElement("p");
-    windInfo.textContent = Math.round(weatherData.weatherWind) + " mph";
+
+    const speedConversion = state.degreeF
+    ? Math.round(weatherData.weatherFeelsLike) + " mph"
+    : Math.round(convertToCelsius(weatherData.weatherFeelsLike)) + " km/h";
+
+    windInfo.textContent = speedConversion;
+    windInfo.classList.add("temperature");
+    windInfo.dataset.min = "";
+    windInfo.dataset.max = "";
+    windInfo.dataset.value = weatherData.weatherWind;
+    windInfo.dataset.unit = "speed";
 
 
 
 
-    const createInfoBlock = (icon,label,value) => {
+
+    const createInfoBlock = (icon,label,value, rawValue = null, unit = null, rawMin = null, rawMax = null) => {
         const div = document.createElement("div");
         div.classList.add("div-info");
 
@@ -87,8 +113,32 @@ if(existingMoreInfo) existingMoreInfo.remove();
 
         const sub2 = document.createElement("div");
         sub2.classList.add("subinfo");
+        
         const info = document.createElement("p");
-        info.textContent = value;
+        if(rawValue) info.dataset.value = rawValue;
+        if(unit) info.dataset.unit = unit;
+        if(rawMin) info.dataset.min = rawMin;
+        if(rawMax) info.dataset.max = rawMax;
+
+        if(unit === "temperature" && rawMin && rawMax) {
+            const newMin = state.degreeF ? rawMin : Math.round(convertToCelsius(rawMin));
+            const newMax = state.degreeF ? rawMax : Math.round(convertToCelsius(rawMax));
+            info.textContent = newMin + "°/" + newMax + "°";
+        } else if(unit === "temperature" && rawValue) {
+            info.textContent = (state.degreeF ? Math.round(rawValue) : Math.round(convertToCelsius(rawValue))) + "°";
+        } else if(unit === "distance") {
+            info.textContent = state.degreeF 
+            ? Math.round(rawValue) + " mi" 
+            : Math.round(convertToKmh(rawValue)) + " km";
+        }  else if(unit === "pressure") {
+            info.textContent = state.degreeF 
+            ? convertToInHg(rawValue) + " in"
+            : rawValue + " mb";
+        } else {
+            info.textContent = value;
+        };
+
+        info.classList.add("temperature");
 
         sub1.appendChild(img);
         sub1.appendChild(labelItem);
@@ -97,7 +147,7 @@ if(existingMoreInfo) existingMoreInfo.remove();
         div.appendChild(sub2);
 
         return div;
-    }
+    };
 
     container.appendChild(divMoreInfo);
 
@@ -113,7 +163,8 @@ if(existingMoreInfo) existingMoreInfo.remove();
     subInfo2.appendChild(sunset);
     subInfo2.appendChild(sunsetInfo);
 
-    divMoreInfo.appendChild(createInfoBlock(temperatureIcon, "Min / Max", Math.round(weatherData.weatherMin) + "°/" + Math.round(weatherData.weatherMax) + "°"));
+    divMoreInfo.appendChild(createInfoBlock(temperatureIcon, "Min / Max", Math.round(weatherData.weatherMin) + "°/" + Math.round(weatherData.weatherMax) + "°", null, "temperature", Math.round(weatherData.weatherMin), Math.round(weatherData.weatherMax) ));
+
     divMoreInfo.appendChild(createInfoBlock(humidityIcon, "Humidity", Math.round(weatherData.weatherHumidity) + "%"));
 
 
@@ -127,9 +178,14 @@ if(existingMoreInfo) existingMoreInfo.remove();
 
 
 
-    divMoreInfo.appendChild(createInfoBlock(pressureIcon, "Pressure", weatherData.weatherPressure + " mb"));
+    divMoreInfo.appendChild(createInfoBlock(pressureIcon, "Pressure", weatherData.weatherPressure + " mb", weatherData.weatherPressure, "pressure", null, null));
+
+
+
     divMoreInfo.appendChild(createInfoBlock(uvIcon, "UV index", weatherData.weatherUV + " of 11"));
-    divMoreInfo.appendChild(createInfoBlock(visibilityIcon, "Visibility", weatherData.weatherVisibility + " mi"));
+
+
+    divMoreInfo.appendChild(createInfoBlock(visibilityIcon, "Visibility", Math.round(weatherData.weatherVisibility) + " mi", weatherData.weatherVisibility, "distance", null, null));
 
 
 }

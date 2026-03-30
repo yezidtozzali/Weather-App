@@ -1,19 +1,19 @@
 import sunIcon from "./light-mode.svg";
 import moonIcon from "./dark-mode.svg";
-
+import state from "./state";
 
 const theme = () => {
+    const switchModeBtn = document.querySelector(".theme-toggle-btn");
     const switchMode = document.querySelector(".theme-toggle");
     switchMode.src = moonIcon;
     const body = document.querySelector("body");
 
-    let isDark = true;
-
-    switchMode.addEventListener("click", () => {
+    switchModeBtn.addEventListener("click", () => {
         body.classList.toggle("dark-mode");
-        isDark = !isDark;
+        state.isDark = !state.isDark;
 
-        if(isDark){
+
+        if(!state.isDark){
             switchMode.src = moonIcon;
             switchMode.style.filter = "none";
         } else {

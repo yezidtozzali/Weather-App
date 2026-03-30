@@ -1,15 +1,20 @@
 import icons from "./icons";
-
+import state from "../state";
+import convert from "../convert";
 
 
 const weatherToday = (weatherData) => {
+    const {convertToCelsius} = convert();
+
     
     const existingWeatherToday = document.querySelector(".next-days");
 if(existingWeatherToday) existingWeatherToday.remove();
     
 
     const container = document.querySelector(".container");
+    container.innerHTML= "";
     const toadayContainer = document.createElement("div");
+    toadayContainer.innerHTML= "";
     toadayContainer.classList.add("weather-today");
     toadayContainer.classList.add("fade-in");
 
@@ -21,8 +26,19 @@ if(existingWeatherToday) existingWeatherToday.remove();
     imgCondition.classList.add("icon-today");
     
     const temperatureToday = document.createElement("h1");
-    temperatureToday.textContent = Math.round(weatherData.weatherTemperature) + "°";
+    const tempConversionToday = state.degreeF
+    ? Math.round(weatherData.weatherTemperature)
+    : Math.round(convertToCelsius(weatherData.weatherTemperature));
+
+    temperatureToday.textContent = tempConversionToday + "°";
     temperatureToday.classList.add("temperature-today");
+    temperatureToday.classList.add("temperature");
+    temperatureToday.dataset.min = "";
+    temperatureToday.dataset.max = "";
+    temperatureToday.dataset.value = weatherData.weatherTemperature;
+    temperatureToday.dataset.unit = "temperature";
+    
+
 
     const divLocationConditions = document.createElement("div");
     divLocationConditions.classList.add("conditions-address");
@@ -50,7 +66,20 @@ if(existingWeatherToday) existingWeatherToday.remove();
         img.classList.add("img-hours");
 
         const temp = document.createElement("p");
-        temp.textContent = Math.round(hour.temp) + "°";
+
+        const tempConversion = state.degreeF
+        ? temp.textContent = Math.round(hour.temp)
+        : Math.round(convertToCelsius(hour.temp));
+
+        temp.textContent = tempConversion + "°";
+        temp.classList.add("temperature");
+        temp.dataset.unit = "temperature";
+        temp.dataset.min = "";
+        temp.dataset.max = "";
+        temp.dataset.unit = "temperature";
+        temp.dataset.value = hour.temp;
+        temp.dataset.unit = "temperature";
+        
         
         div.appendChild(p);
         div.appendChild(img);
