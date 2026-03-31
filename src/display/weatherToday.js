@@ -12,7 +12,6 @@ if(existingWeatherToday) existingWeatherToday.remove();
     
 
     const container = document.querySelector(".container");
-    container.innerHTML= "";
     const toadayContainer = document.createElement("div");
     toadayContainer.innerHTML= "";
     toadayContainer.classList.add("weather-today");

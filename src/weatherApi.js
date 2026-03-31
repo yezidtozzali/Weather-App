@@ -1,8 +1,11 @@
 import weatherToday from "./display/weatherToday";
 import moreInfo from "./display/moreInfo";
 import nextDays from "./display/nextDays";
+import skeleton from "./display/skeleton";
 
 const weatherApi = () => {
+    const {showSkeleton, hideSkeleton} = skeleton();
+
     const divSearch = document.querySelector(".list");
     const locationInput = document.querySelector(".location-input");
     const listCity = document.createElement("ul");
@@ -19,11 +22,11 @@ async function getCity() {
     try{        
     const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${locationInput.value}&format=json&limit=5`,
     { headers: { "Accept-Language": "us" } });
-    console.log(response);
+
     
     
     const city = await response.json();
-        console.log(city);
+
 
     city.forEach((place) => {
         
@@ -70,7 +73,12 @@ locationInput.addEventListener("input", () =>{
     const locationData = async (location) => {
         if(!location) return;
 
+        showSkeleton();
+        
+
         const weatherData = await getWeather(location);
+
+        hideSkeleton();
         weatherToday(weatherData);
         moreInfo(weatherData);
         nextDays(weatherData);
@@ -91,8 +99,8 @@ locationInput.addEventListener("input", () =>{
         const weatherWindDir = weather.currentConditions.winddir;
         const weatherUV = weather.currentConditions.uvindex;
         const weatherPressure = weather.currentConditions.pressure;
-        const weatherSunrise = weather.currentConditions.sunrise;
-        const weatherSunset = weather.currentConditions.sunset;
+        const weatherSunrise = new Date (`2000-01-01T${weather.currentConditions.sunrise}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+        const weatherSunset = new Date (`2000-01-01T${weather.currentConditions.sunset}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
         const weatherMin = weather.days[0].tempmin;
         const weatherMax = weather.days[0].tempmax;
         const weatherVisibility = weather.currentConditions.visibility;
@@ -113,7 +121,6 @@ locationInput.addEventListener("input", () =>{
         
 
         const weather = await response.json();
-        console.log(weather);
         const weatherData = formatWeather(weather);
         
         return weatherData;

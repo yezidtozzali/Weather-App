@@ -12,7 +12,7 @@ const toggleDegree = () => {
         state.degreeF = !state.degreeF;
 
 
-        switchDegree.textContent = state.degreeF ? "F°" : "C°";
+        switchDegree.textContent = state.degreeF ? "°F" : "°C";
 
         const temperature = document.querySelectorAll(".temperature");
         
@@ -37,7 +37,6 @@ const toggleDegree = () => {
             ? convertToInHg(pressureValue) + " in"
             : pressureValue + " mb";
         }if(temp.dataset.unit === "distance"){
-            console.log(temp.dataset.value);
             const distanceValue = parseFloat(temp.dataset.value);
             temp.textContent = state.degreeF 
             ? Math.round(distanceValue) + " mi"
